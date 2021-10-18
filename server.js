@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const path = require('path')
+const hamsters = require('./routes/hamsters.js')
 
 const PORT = 1345
 const staticFolder = path.join(__dirname, 'static')
@@ -9,27 +10,31 @@ const staticFolder = path.join(__dirname, 'static')
 
 
 // Middleware
-app.use( express.json() )
-app.use( cors() )
-app.use( express.static(staticFolder) )
-
-app.use((req, res, next) =>{
+app.use((req, res, next) =>{ // Logger
 	console.log(`${req.method} ${req.url}`,  req.params );
 	next()
 })
 
+
+app.use( express.json() )
+app.use( cors() )
+app.use( express.static(staticFolder) )
+
+
+
 // Routes
-app.get('/', (req, res) =>{
-	res.send('Welcome to Hamster-War')
+app.get('/', (req, res) => {
 })
 
+// REST API for /hamsters
+app.use('/hamsters', hamsters);
 
 
 
 
 
 
-
+// Starta servern 
 app.listen(PORT, () => {
 	console.log('Server listening on port ' + PORT);
 })
