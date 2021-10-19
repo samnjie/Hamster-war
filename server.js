@@ -23,8 +23,8 @@ app.use( express.static(staticFolder) )
 
 
 // Routes
-app.get('/', (req, res) => {
-})
+//app.get('/', (req, res) => {
+//})
 
 // REST API for /hamsters
 app.use('/hamsters', hamsters);
