@@ -128,6 +128,29 @@ router.put('/:id', async (req, res) => {
 
 // DELETE / hamster
 
+router.delete('/:id', async (req, res) =>{
+	try{
+
+		const id = req.params.id;
+		const docRef = await db.collection('hamster').doc(id).get();
+
+		if (!docRef.exists) {
+			res.sendStatus(404)
+			return
+		}
+
+		if (!id) {
+			res.sendStatus(400)
+			return
+		}
+
+		await db.collection('hamster').doc(id).delete();
+		res.sendStatus(200)
+	} catch (err) {
+		res.status(500).send(err.message)
+	}
+})
+
 
 
 

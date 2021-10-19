@@ -15,7 +15,6 @@ app.use((req, res, next) =>{ // Logger
 	next()
 })
 
-
 app.use( express.json() )
 app.use( cors() )
 app.use( express.static(staticFolder) )
@@ -23,8 +22,6 @@ app.use( express.static(staticFolder) )
 
 
 // Routes
-//app.get('/', (req, res) => {
-//})
 
 // REST API for /hamsters
 app.use('/hamsters', hamsters);
