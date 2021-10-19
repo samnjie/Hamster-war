@@ -99,10 +99,33 @@ router.post('/', async (req, res) => {
 })
 
 
+// PUT /hamster/:id
+
+router.put('/:id', async (req, res) => {
+	try{
+		const id = req.params.id;
+		const object = req.body;
+
+		let docRef = await db.collection('hamster').doc(id).get();
+
+		if (isHamsterObject(object) || !Object.keys(object).length) {
+			res.sendStatus(400);
+			return
+		}else if (!docRef.exists) {
+			res.sendStatus(404);
+			return
+		}
+		await db.collection('hamster').doc(id).set(object, {merge: true});
+		res.sendStatus(200)
+	} catch (err) {
+		res.status(500).send(err.message)
+	}
+});
 
 
 
-// PUT /hamster
+
+
 // DELETE / hamster
 
 
