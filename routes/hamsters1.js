@@ -9,9 +9,9 @@ const router = express.Router();
 
 // GET
 router.get('/', async (req, res) => {
-	console.log("/HAMSTERs")
+	
 	try {
-		console.log("/HAMSTER")
+
         const hamsterRef = db.collection('hamster');
         const snapshot = await hamsterRef.get();
         if (snapshot.empty) {
@@ -34,10 +34,10 @@ router.get('/', async (req, res) => {
 // GET/random/hamsters
 
 router.get('/random', async (req, res) =>{
-	// console.log("RANDOM")
 	try{	
 		const hamsterRef = db.collection('hamster');
     	const snapshot = await hamsterRef.get();
+
 		if (snapshot.empty) {
 			res.status(404).send([])
 			return
@@ -46,7 +46,6 @@ router.get('/random', async (req, res) =>{
 		let items = []
 		snapshot.forEach(doc => {
 			const data = doc.data()
-			data.id = doc.id
 			items.push(data)
 		});
 		let randomIndex = Math.floor(Math.random() * items.length);
@@ -107,9 +106,8 @@ router.put('/:id', async (req, res) => {
 		const id = req.params.id;
 		const object = req.body;
 
-		console.log('FFF');
 		let docRef = await db.collection('hamster').doc(id).get();
-		console.log(docRef.exists);
+
 		if (isHamsterObject(object) || !Object.keys(object).length) {
 			res.sendStatus(400);
 			return
